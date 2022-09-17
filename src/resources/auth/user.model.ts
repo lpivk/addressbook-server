@@ -54,15 +54,15 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.pre('updateOne', async function (next) {
-  if (!this._update.password) {
-    next();
-    return;
-  }
+// userSchema.pre('updateOne', async function (next) {
+//   if (!this._update.password) {
+//     next();
+//     return;
+//   }
 
-  const hashedPassword = await bcrypt.hash(this._update.password, 10);
-  this._update.password = hashedPassword;
-  next();
-});
+//   const hashedPassword = await bcrypt.hash(this._update.password, 10);
+//   this._update.password = hashedPassword;
+//   next();
+// });
 
 export const UserModel = mongoose.model<IUser>('User', userSchema);
