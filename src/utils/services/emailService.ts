@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 const { SENDER_EMAIL, SENDER_PASSWORD } = process.env;
 
 const sendActivationEmail = (to: string, activationToken: string): void => {
-  const url = `http://localhost:3000/activate/${activationToken}`;
+  const url = `https://nwp-addressbook-client.netlify.app/activate/${activationToken}`;
 
   const transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -44,7 +44,7 @@ const sendActivationEmail = (to: string, activationToken: string): void => {
 };
 
 const sendForgotPasswordEmail = (to: string, accessToken: string): void => {
-  const url = `http://localhost:3000/reset-password/${accessToken}`;
+  const url = `https://nwp-addressbook-client.netlify.app/reset-password/${accessToken}`;
 
   const transporter = nodemailer.createTransport({
     service: 'hotmail',
