@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 const { SENDER_EMAIL, SENDER_PASSWORD } = process.env;
 
 const sendActivationEmail = (to: string, activationToken: string): void => {
-  const url = `http://localhost:3000/reset-password/activate/${activationToken}`;
+  const url = `http://localhost:3000/activate/${activationToken}`;
 
   const transporter = nodemailer.createTransport({
     service: 'hotmail',
