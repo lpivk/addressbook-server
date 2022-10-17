@@ -70,13 +70,17 @@ export default class UserController implements IController {
       const _id = jwtService.verifyActivationToken(activationToken);
       const user = await this.UserService.findUserById(_id);
 
+      if (user.isActive) throw new Error('Your account has already been activated.');
+
       await user.updateOne({ isActive: true });
 
       res.status(200).json({ message: 'Your account has been activated.' });
     } catch (error) {
-      res.status(400).json({
-        message: 'You are using invalid or expired link.',
-      });
+      const err = error as Error;
+
+      res
+        .status(404)
+        .json({ message: err ? err.message : 'You are using invalid or expired link.' });
     }
   };
 
