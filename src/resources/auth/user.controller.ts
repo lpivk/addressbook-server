@@ -16,10 +16,10 @@ export default class UserController implements IController {
 
   private initialiseRoutes(): void {
     this.router.post(`${this.path}/signup`, this.signup);
-    this.router.post(`${this.path}/activate`, this.activateUser);
+    this.router.put(`${this.path}/activate`, this.activateUser);
     this.router.post(`${this.path}/send-activation-email`, this.sendActivationEmail);
     this.router.post(`${this.path}/forgot-password`, this.forgotPassword);
-    this.router.post(`${this.path}/reset-password`, this.resetPassword);
+    this.router.put(`${this.path}/reset-password`, this.resetPassword);
     this.router.post(`${this.path}/login`, this.login);
   }
 
