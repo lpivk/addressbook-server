@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+
 import { IUser } from './user.interface';
 
 const userSchema = new mongoose.Schema(
@@ -37,9 +38,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.methods.isValidPassword = async function (
-  password: string
-): Promise<boolean> {
+userSchema.methods.isValidPassword = async function (password: string): Promise<boolean> {
   return await bcrypt.compare(password, this.password);
 };
 
