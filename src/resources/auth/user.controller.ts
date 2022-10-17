@@ -24,9 +24,9 @@ export default class UserController implements IController {
   }
 
   private signup: RequestHandler = async (req, res) => {
-    const { username, email, password } = req.body;
-
     try {
+      const { username, email, password } = req.body;
+
       const _id = await this.UserService.signup(username, email, password);
       const activationToken = jwtService.createActivationToken(_id);
 
@@ -44,9 +44,9 @@ export default class UserController implements IController {
   };
 
   private sendActivationEmail: RequestHandler = async (req, res) => {
-    const { email } = req.body;
-
     try {
+      const { email } = req.body;
+
       const { _id } = await this.UserService.findUserByEmail(email);
       const activationToken = jwtService.createActivationToken(_id.toString());
 
@@ -64,9 +64,9 @@ export default class UserController implements IController {
   };
 
   private activateUser: RequestHandler = async (req, res) => {
-    const { activationToken } = req.body;
-
     try {
+      const { activationToken } = req.body;
+
       const _id = jwtService.verifyActivationToken(activationToken);
       const user = await this.UserService.findUserById(_id);
 
@@ -81,16 +81,16 @@ export default class UserController implements IController {
   };
 
   private forgotPassword: RequestHandler = async (req, res) => {
-    const { email } = req.body;
-
     try {
-      const { _id } = await this.UserService.findUserByEmail(email);
-      const accessToken = jwtService.createForgotPasswordToken(_id.toString());
+      const { email } = req.body;
 
-      emailService.sendForgotPasswordEmail(email, accessToken);
+      const { _id } = await this.UserService.findUserByEmail(email);
+      const forgotPasswordToken = jwtService.createForgotPasswordToken(_id.toString());
+
+      emailService.sendForgotPasswordEmail(email, forgotPasswordToken);
 
       res.status(200).json({
-        accessToken,
+        forgotPasswordToken,
         message: 'Please check your e-mail.',
       });
     } catch (error) {
@@ -101,9 +101,9 @@ export default class UserController implements IController {
   };
 
   private resetPassword: RequestHandler = async (req, res) => {
-    const { forgotPasswordToken, password } = req.body;
-
     try {
+      const { forgotPasswordToken, password } = req.body;
+
       const _id = jwtService.verifyForgotPasswordToken(forgotPasswordToken);
       await this.UserService.resetPassword(_id, password);
 
@@ -116,9 +116,9 @@ export default class UserController implements IController {
   };
 
   private login: RequestHandler = async (req, res) => {
-    const { username, password } = req.body;
-
     try {
+      const { username, password } = req.body;
+
       const user = await this.UserService.login(username, password);
       const accessToken = jwtService.createAccessToken(user._id);
 
