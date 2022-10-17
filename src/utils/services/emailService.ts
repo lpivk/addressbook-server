@@ -43,8 +43,8 @@ const sendActivationEmail = (to: string, activationToken: string): void => {
   });
 };
 
-const sendForgotPasswordEmail = (to: string, accessToken: string): void => {
-  const url = `http://localhost:3000/reset-password/${accessToken}`;
+const sendForgotPasswordEmail = (to: string, resetPasswordToken: string): void => {
+  const url = `http://localhost:3000/reset-password/${resetPasswordToken}`;
 
   const transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -62,7 +62,7 @@ const sendForgotPasswordEmail = (to: string, accessToken: string): void => {
         <div style="max-width: 500px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 100%;">
         <div style="text-align: center;">
           <p>
-            Here is your link for reseting your password.
+            Here is your link for resetting your password.
           </p>
           <p>
             Just click the button below and follow the steps.

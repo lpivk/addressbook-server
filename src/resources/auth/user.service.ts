@@ -1,5 +1,14 @@
 import { UserModel } from './user.model';
-import { LoginDetails } from '../../utils/types/LoginDetails';
+
+type UserDetails = {
+  _id: string;
+  username: string;
+  email: string;
+  isActive: boolean;
+  role: string;
+  avatar: string;
+  createdAt: Date;
+};
 
 export class UserService {
   public async findUserByEmail(email: string) {
@@ -25,11 +34,10 @@ export class UserService {
     email: string,
     password: string
   ): Promise<string> {
-    const userByUsername = await UserModel.findOne({ username });
-    if (userByUsername) throw new Error('Username already exists.');
+    if (await UserModel.findOne({ username }))
+      throw new Error('Username already exists.');
 
-    const userByEmail = await UserModel.findOne({ email });
-    if (userByEmail) throw new Error('E-mail already exists.');
+    if (await UserModel.findOne({ email })) throw new Error('E-mail already exists.');
 
     const user = await UserModel.create({
       username,
@@ -40,10 +48,7 @@ export class UserService {
     return user._id.toString();
   }
 
-  public async login(
-    username: string,
-    password: string
-  ): Promise<LoginDetails> {
+  public async login(username: string, password: string): Promise<UserDetails> {
     const user = await UserModel.findOne({ username });
 
     if (!user) throw new Error('Username does not exist.');
